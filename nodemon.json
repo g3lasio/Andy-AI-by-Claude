@@ -1,0 +1,10 @@
+
+{
+  "watch": ["src"],
+  "ext": "ts,tsx,js,jsx",
+  "ignore": ["src/**/*.test.ts", "src/**/*.spec.ts", "src/dist"],
+  "exec": "ts-node scripts/validate.ts",
+  "events": {
+    "restart": "clear"
+  }
+}
