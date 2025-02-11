@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -13,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className="antialiased font-sans">
         <nav className="fixed top-0 left-0 right-0 bg-white shadow p-4 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center">
