@@ -4,6 +4,7 @@ import { ChatService } from '../chat.service';
 import { ValidationService } from '../validation.service';
 import { ContextService } from '../context.service';
 import { Message, ChatResponse } from '../../interfaces/chat.types';
+import { Cache } from '@/shared/utils/cache';
 
 vi.mock('@anthropic-ai/sdk', () => ({
   Anthropic: vi.fn().mockImplementation(() => ({
@@ -52,8 +53,8 @@ describe('ChatService', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    const mockCache = vi.mocked(Cache);
-    mockCache.mockClear();
+    vi.mocked(Cache.get).mockClear();
+    vi.mocked(Cache.set).mockClear();
     chatService = ChatService.getInstance();
     mockMessage = 'Test message';
     mockUserId = 'test-user-123';
