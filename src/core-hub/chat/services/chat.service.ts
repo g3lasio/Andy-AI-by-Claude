@@ -30,7 +30,7 @@ export class ChatService {
   private constructor() {
     this.initializeServices();
     this.rateLimiter = new RateLimiter({ maxRequests: 50, perMinute: 1 });
-    this.cache = Cache;
+    this.cache = new Cache({ maxSize: 1000, ttl: 3600000 });
   }
 
   private async initializeServices(): Promise<void> {
