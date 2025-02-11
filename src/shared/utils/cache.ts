@@ -1,6 +1,8 @@
-export class Cache {
-  static get(key: string) {
-    return null;
+export default {
+  Cache: {
+    get(key: string) {
+      return null;
+    },
+    set(key: string, value: any) {}
   }
-  static set(key: string, value: any) {}
-}
+};

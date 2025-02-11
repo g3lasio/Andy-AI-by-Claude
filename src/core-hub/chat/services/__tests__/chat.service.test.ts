@@ -33,10 +33,12 @@ vi.mock('openai', () => ({
 }));
 
 vi.mock('@/shared/utils/cache', () => ({
-  Cache: vi.fn().mockImplementation(() => ({
-    get: vi.fn().mockReturnValue(null),
-    set: vi.fn(),
-  })),
+  default: {
+    Cache: {
+      get: vi.fn().mockReturnValue(null),
+      set: vi.fn(),
+    }
+  }
 }));
 vi.mock('../validation.service');
 
