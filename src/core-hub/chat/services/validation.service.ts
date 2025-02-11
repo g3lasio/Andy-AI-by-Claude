@@ -33,9 +33,11 @@ export class ValidationService {
       this.validateMessageLength(message);
       await this.validateMessageSecurity(message);
       this.validateMessageContent(message);
+      logger.info('Message validation successful'); // Added success logging
     } catch (error) {
       logger.error('Message validation failed:', {
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.stack : 'Unknown error', //Improved error logging
+        message,
         messageLength: message.length,
       });
       throw error;
