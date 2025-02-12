@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply antialiased text-gray-900 dark:text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors;
+  }
+  
+  .input-primary {
+    @apply rounded-lg border border-gray-300 dark:border-gray-600 p-3 focus:ring-2 focus:ring-blue-500 dark:bg-gray-700;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
