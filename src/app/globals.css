@@ -72,21 +72,38 @@ body {
 
 /* Chat Interface Styles */
 .message-bubble {
-  @apply rounded-2xl p-4 max-w-[70%] shadow-sm;
+  @apply rounded-2xl p-4 max-w-[80%] shadow-sm backdrop-blur-sm transition-all duration-200;
 }
 
 .user-message {
-  @apply bg-blue-600 text-white ml-auto;
+  @apply bg-blue-600 text-white ml-auto hover:shadow-md;
 }
 
 .assistant-message {
-  @apply bg-white dark:bg-gray-800;
+  @apply bg-white/90 dark:bg-gray-800/90 hover:shadow-md;
 }
 
-.quick-action-button {
-  @apply flex items-center gap-2 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors;
+.chat-container {
+  @apply flex flex-col h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800;
+}
+
+.messages-container {
+  @apply flex-1 overflow-y-auto px-4 py-6 max-w-4xl mx-auto w-full;
+}
+
+.input-container {
+  @apply border-t dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm;
 }
 
 .chat-input {
-  @apply w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 transition-all;
+  @apply w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 
+         bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm
+         focus:ring-2 focus:ring-blue-500 dark:text-white
+         transition-all duration-200;
+}
+
+.send-button {
+  @apply px-6 py-3 bg-blue-600 text-white rounded-xl 
+         hover:bg-blue-700 transition-colors disabled:opacity-50
+         shadow-sm hover:shadow-md;
 }
