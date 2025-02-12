@@ -43,10 +43,10 @@ export default function ChatPage() {
               key={index}
               className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`max-w-[80%] p-4 rounded-2xl shadow-sm backdrop-blur-sm
+              <div className={`max-w-[80%] p-4 rounded-2xl shadow-lg backdrop-blur-sm border
                 ${message.role === 'user' 
-                  ? 'bg-blue-600 text-white ml-auto' 
-                  : 'bg-white/90 dark:bg-gray-800/90'}`}
+                  ? 'bg-cyan-600/50 text-white ml-auto border-cyan-500/30' 
+                  : 'bg-slate-800/50 text-cyan-50 border-slate-700/30'}`}
               >
                 <p className="text-sm md:text-base leading-relaxed">
                   {message.content}
