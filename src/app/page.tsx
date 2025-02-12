@@ -7,8 +7,8 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('chat');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 animate-fade-in">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Andy AI Tax Assistant
@@ -18,7 +18,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+        <div className="glass-card overflow-hidden">
           <div className="border-b border-gray-200 dark:border-gray-700">
             <nav className="flex justify-center space-x-8 px-4" aria-label="Tabs">
               {['chat', 'documents', 'analysis'].map((tab) => (
@@ -49,9 +49,9 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder="Escribe tu mensaje..."
-                    className="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 p-3 focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="input-modern"
                   />
-                  <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                  <button className="btn-modern">
                     Enviar
                   </button>
                 </div>
