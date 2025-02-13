@@ -73,7 +73,19 @@ body {
 
 /* Chat Interface Styles */
 .message-bubble {
-  @apply rounded-2xl p-4 max-w-[80%] shadow-sm backdrop-blur-sm transition-all duration-200;
+  @apply rounded-2xl p-4 max-w-[80%] shadow-xl backdrop-blur-sm transition-all duration-300;
+  animation: messageAppear 0.3s ease-out;
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .user-message {
