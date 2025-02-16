@@ -58,3 +58,41 @@
 .module:hover {
   transform: scale(1.1);
 }
+
+/* New styles from edited snippet */
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #112121;
+  color: white;
+}
+
+.dashboard-header {
+  padding: 1rem 2rem;
+  background-color: #13c3c3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-nav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.dashboard-nav a {
+  color: #01010b;
+  text-decoration: none;
+  font-family: 'Quantico', sans-serif;
+  font-weight: 500;
+}
+
+.dashboard-content {
+  padding: 2rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
