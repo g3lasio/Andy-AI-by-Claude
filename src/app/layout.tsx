@@ -1,6 +1,7 @@
-
 import type { Metadata } from "next";
 import "./globals.css";
+import React from 'react';
+import Icon from './components/Icon_andy';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -9,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className="antialiased font-sans">
@@ -29,7 +30,10 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
-        <main className="pt-16 min-h-screen">
+        <div className="fixed top-4 left-4 z-50"> {/* Added div for icon positioning */}
+          <Icon />
+        </div>
+        <main className="pt-20 min-h-screen"> {/* Increased top padding to avoid overlap */}
           {children}
         </main>
       </body>

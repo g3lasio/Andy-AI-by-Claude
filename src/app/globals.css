@@ -1,28 +1,19 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';  // Para la redirección entre páginas
-import Sidebar from './components/Sidebar';  // El menú lateral
-import Header from './components/Header';    // El encabezado
 
-export default function App() {
-  const router = useRouter();
-  const [activePage, setActivePage] = useState('home'); // Control de la página activa
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 
-  // Lógica de redirección según la página activa
-  const handleNavigation = (page) => {
-    setActivePage(page);
-    router.push(`/${page}`);  // Cambiar de ruta
-  };
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #112121;
+  color: #ffffff;
+}
 
-  return (
-    <div className="app-container">
-      <Header />
-      <Sidebar onNavigate={handleNavigation} />
-
-      {/* El cuerpo de la página cambia dependiendo de la ruta */}
-      {activePage === 'home' && <WelcomePage />}
-      {activePage === 'dashboard' && <Dashboard />}
-      {activePage === 'chat' && <Chat />}
-      {/* Puedes seguir agregando más páginas aquí */}
-    </div>
-  );
+a {
+  color: inherit;
+  text-decoration: none;
 }
