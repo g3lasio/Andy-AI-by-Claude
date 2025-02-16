@@ -64,7 +64,65 @@
   min-height: 100vh;
   background-color: #112121;
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
 }
+
+.andy-branding {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.andy-title {
+  color: #f5f5f5;
+  font-size: 48px;
+  font-family: 'Quantico', sans-serif;
+  font-weight: 700;
+  line-height: 62px;
+  margin-top: 1rem;
+}
+
+.modules-circle {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.module-item {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+}
+
+.module-circle {
+  background-color: white;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #112121;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.module-circle:hover {
+  transform: scale(1.1);
+}
+
+/* Posicionamiento de los módulos en círculo */
+.module-item:nth-child(1) { transform: translate(0, -150px); }
+.module-item:nth-child(2) { transform: translate(143px, -46px); }
+.module-item:nth-child(3) { transform: translate(88px, 121px); }
+.module-item:nth-child(4) { transform: translate(-88px, 121px); }
+.module-item:nth-child(5) { transform: translate(-143px, -46px); }
 
 .dashboard-header {
   padding: 1rem 2rem;
