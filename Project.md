@@ -1,6 +1,6 @@
 
 # **Project Overview: Andy AI**
-> *Your Intelligent Financial Companion*
+> *Your smart financial assistant*
 
 **Andy AI** is an intelligent assistant designed to help users manage their personal finances, providing tools to control credit, plan taxes, optimize investments, and make more informed financial decisions. Built with artificial intelligence, it uses specialized modules to adapt to the financial needs of each user. Through its user-friendly and accessible interface, Andy AI allows users to monitor and improve their financial profile in a simple and efficient manner.
 
