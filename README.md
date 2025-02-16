@@ -1,84 +1,84 @@
 
-# AndyAI - Asistente Fiscal Inteligente
+# AndyAI - Intelligent Tax Assistant
 
-Este proyecto está construido con [Next.js](https://nextjs.org) y utiliza tecnologías modernas para proporcionar un asistente fiscal inteligente.
+This project is built with [Next.js](https://nextjs.org) and uses modern technologies to provide an intelligent tax assistant.
 
-## Características Principales
+## Main Features
 
-- 🤖 Asistente IA con Claude-3 para consultas fiscales
-- 💬 Chat interactivo con interfaz profesional
-- 📊 Dashboard moderno y responsive
-- 🔒 Autenticación segura con Firebase
-- 📋 Gestión inteligente de documentos fiscales
-- 🧠 Sistema de memoria para contexto conversacional
+- 🤖 AI Assistant with Claude-3 for tax queries
+- 💬 Interactive chat with professional interface
+- 📊 Modern and responsive Dashboard
+- 🔒 Secure authentication with Firebase
+- 📋 Intelligent tax document management
+- 🧠 Memory system for conversational context
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 src/
-├── app/                    # Componentes y páginas Next.js
-├── core-hub/              # Núcleo de la aplicación
-│   ├── ai/               # Servicios de IA
-│   ├── chat/            # Sistema de chat
-│   ├── documents/       # Gestión de documentos
-│   └── memory/         # Sistema de memoria
-├── modules/              # Módulos específicos
-│   └── taxAdvisor/     # Módulo de asesoría fiscal
-└── shared/              # Utilidades compartidas
+├── app/                    # Next.js components and pages
+├── core-hub/              # Application core
+│   ├── ai/               # AI services
+│   ├── chat/            # Chat system
+│   ├── documents/       # Document management
+│   └── memory/         # Memory system
+├── modules/              # Specific modules
+│   └── taxAdvisor/     # Tax advisory module
+└── shared/              # Shared utilities
 ```
 
-## Tecnologías Utilizadas
+## Technologies Used
 
 - Next.js 14
 - TypeScript
 - TailwindCSS
 - Firebase
 - Claude-3 API
-- Jest/Vitest para testing
+- Jest/Vitest for testing
 
-## Comenzar
+## Getting Started
 
-1. Clona el repositorio
-2. Instala las dependencias:
+1. Clone the repository
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Configura las variables de entorno en `.env.local`
+3. Configure environment variables in `.env.local`
 
-4. Inicia el servidor de desarrollo:
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-Abre [http://0.0.0.0:3000](http://0.0.0.0:3000) en tu navegador para ver la aplicación.
+Open [http://0.0.0.0:3000](http://0.0.0.0:3000) in your browser to view the application.
 
 ## Testing
 
 ```bash
-npm run test        # Ejecuta tests con Jest
-npm run test:watch  # Modo watch
-npm run validate    # Ejecuta validaciones completas
+npm run test        # Run tests with Jest
+npm run test:watch  # Watch mode
+npm run validate    # Run complete validations
 ```
 
-## Últimas Actualizaciones
+## Latest Updates
 
-- ✨ Nueva interfaz de usuario más profesional y futurista
-- 🎨 Implementación de dashboard moderno
-- 🔄 Mejora en el sistema de memoria contextual
-- 🚀 Optimización de rendimiento
-- 🛠️ Mejoras en la arquitectura modular
+- ✨ New more professional and futuristic user interface
+- 🎨 Modern dashboard implementation
+- 🔄 Improvement in contextual memory system
+- 🚀 Performance optimization
+- 🛠️ Improvements in modular architecture
 
-## Próximas Características
+## Upcoming Features
 
-- [ ] Integración con más servicios fiscales
-- [ ] Mejoras en el análisis predictivo
-- [ ] Expansión del sistema de documentación
-- [ ] Nuevas funcionalidades en el dashboard
+- [ ] Integration with more tax services
+- [ ] Improvements in predictive analysis
+- [ ] Documentation system expansion
+- [ ] New dashboard functionalities
 
-## Contribución
+## Contributing
 
-Las contribuciones son bienvenidas. Por favor, asegúrate de ejecutar las validaciones antes de enviar un PR:
+Contributions are welcome. Please make sure to run validations before submitting a PR:
 
 ```bash
 npm run validate
