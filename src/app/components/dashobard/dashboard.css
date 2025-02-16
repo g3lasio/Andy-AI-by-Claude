@@ -91,6 +91,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+}
+
+.module-item {
+  z-index: 2;
 }
 
 .module-item {

@@ -16,6 +16,8 @@ const modules = [
   { name: 'Edu Profit', icon: 'education' }
 ];
 
+import BackgroundCircle from '../ui/BackgroundCircle';
+
 export default function Dashboard() {
   return (
     <div className="dashboard-container" style={{ backgroundColor: '#112121' }}>
@@ -24,6 +26,7 @@ export default function Dashboard() {
         <h1 className="andy-title">Andy AI</h1>
       </div>
       <div className="modules-circle">
+        <BackgroundCircle />
         {modules.map((module, index) => (
           <div key={index} className="module-item">
             <div className="module-circle">{module.name}</div>
