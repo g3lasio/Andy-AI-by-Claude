@@ -1,122 +1,28 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+import { useState } from 'react';
+import { useRouter } from 'next/router';  // Para la redirección entre páginas
+import Sidebar from './components/Sidebar';  // El menú lateral
+import Header from './components/Header';    // El encabezado
 
-@layer base {
-  body {
-    @apply antialiased text-gray-900 dark:text-white bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen;
-  }
-}
+export default function App() {
+  const router = useRouter();
+  const [activePage, setActivePage] = useState('home'); // Control de la página activa
 
-@layer components {
-  .glass-card {
-    @apply bg-slate-800/40 backdrop-blur-lg border border-cyan-500/20 rounded-2xl shadow-xl;
-    box-shadow: 0 8px 32px rgba(2, 132, 199, 0.2);
-  }
+  // Lógica de redirección según la página activa
+  const handleNavigation = (page) => {
+    setActivePage(page);
+    router.push(`/${page}`);  // Cambiar de ruta
+  };
 
-  .nav-tab {
-    @apply px-4 py-3 text-sm font-medium transition-all duration-200 border-b-2 hover:text-blue-600 dark:hover:text-blue-400;
-  }
+  return (
+    <div className="app-container">
+      <Header />
+      <Sidebar onNavigate={handleNavigation} />
 
-  .input-modern {
-    @apply w-full px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
-  }
-
-  .btn-modern {
-    @apply px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl;
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors;
-  }
-
-  .input-primary {
-    @apply rounded-lg border border-gray-300 dark:border-gray-600 p-3 focus:ring-2 focus:ring-blue-500 dark:bg-gray-700;
-  }
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-
-/* Chat Interface Styles */
-.message-bubble {
-  @apply rounded-2xl p-4 max-w-[80%] shadow-xl backdrop-blur-sm transition-all duration-300;
-  animation: messageAppear 0.3s ease-out;
-}
-
-@keyframes messageAppear {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.user-message {
-  @apply bg-blue-600 text-white ml-auto hover:shadow-md;
-}
-
-.assistant-message {
-  @apply bg-white/90 dark:bg-gray-800/90 hover:shadow-md;
-}
-
-.chat-container {
-  @apply flex flex-col h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800;
-}
-
-.messages-container {
-  @apply flex-1 overflow-y-auto px-4 py-6 max-w-4xl mx-auto w-full;
-}
-
-.input-container {
-  @apply border-t dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm;
-}
-
-.chat-input {
-  @apply w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 
-         bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm
-         focus:ring-2 focus:ring-blue-500 dark:text-white
-         transition-all duration-200;
-}
-
-.send-button {
-  @apply px-6 py-3 bg-blue-600 text-white rounded-xl 
-         hover:bg-blue-700 transition-colors disabled:opacity-50
-         shadow-sm hover:shadow-md;
+      {/* El cuerpo de la página cambia dependiendo de la ruta */}
+      {activePage === 'home' && <WelcomePage />}
+      {activePage === 'dashboard' && <Dashboard />}
+      {activePage === 'chat' && <Chat />}
+      {/* Puedes seguir agregando más páginas aquí */}
+    </div>
+  );
 }
