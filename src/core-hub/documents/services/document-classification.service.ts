@@ -35,13 +35,17 @@ export default class DocumentClassificationService {
     }
 
     const content = fs.readFileSync(filePath, 'utf-8');
-    const response = await this.openai.chat.completions.create({
-      model: 'gpt-4',
+    const response = await this.anthropic.messages.create({
+      model: 'claude-3-opus-20240229',
+      max_tokens: 1024,
       messages: [
         {
           role: 'system',
-          content:
-            'Clasifica el siguiente documento en una de estas categorías: Factura, Contrato, Reporte Financiero, Formulario, Documento Legal, Otro.',
+          content: `Analiza y clasifica el siguiente documento. Proporciona:
+          1. Tipo de documento (Factura, Contrato, Reporte, etc.)
+          2. Propósito principal
+          3. Nivel de confidencialidad estimado (Bajo/Medio/Alto)
+          4. Campos clave identificados`,
         },
         { role: 'user', content: content },
       ],

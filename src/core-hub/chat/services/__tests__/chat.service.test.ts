@@ -1,4 +1,3 @@
-
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import { ChatService } from '../chat.service';
 import { ValidationService } from '../validation.service';
@@ -33,10 +32,11 @@ vi.mock('openai', () => ({
 }));
 
 vi.mock('@/shared/utils/cache', () => ({
-  Cache: {
+  Cache: vi.fn().mockImplementation(() => ({
     get: vi.fn().mockReturnValue(null),
     set: vi.fn(),
-  }
+    clear: vi.fn()
+  }))
 }));
 vi.mock('../validation.service');
 
@@ -181,5 +181,23 @@ describe('ChatService', () => {
         chatService.processMessage(mockUserId, mockMessage, [invalidAttachment])
       ).rejects.toThrow();
     });
+  });
+});
+
+describe('ChatService', () => {
+  let chatService: ChatService;
+  let mockMessage: string;
+  let mockUserId: string;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    chatService = ChatService.getInstance();
+    mockMessage = 'Test message';
+    mockUserId = 'test-user-123';
+  });
+
+  it('should process messages', async () => {
+    const response = await chatService.processMessage(mockUserId, mockMessage);
+    expect(response).toBeDefined();
   });
 });

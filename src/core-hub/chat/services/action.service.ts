@@ -148,9 +148,47 @@ export class ActionService {
   }
 
   private async verifyUserApproval(action: ModuleAction, userId: string): Promise<boolean> {
-    // Implementar verificación de aprobación del usuario
-    // Por ahora retornamos true para testing
-    return true;
+    const riskLevel = this.calculateActionRisk(action);
+    const userPreferences = await this.getUserAutomationPreferences(userId);
+    
+    if (riskLevel <= userPreferences.automationThreshold) {
+      return true;
+    }
+
+    if (action.type === 'SYSTEM' && action.metadata?.isReversible) {
+      const context = await contextService.getSessionContext(userId);
+      return context?.metadata?.allowAutomatedActions || false;
+    }
+
+    return await this.requestUserConfirmation(userId, action);
+  }
+
+  private calculateActionRisk(action: ModuleAction): number {
+    const riskFactors = {
+      FINANCIAL: 0.8,
+      TAX: 0.9,
+      SYSTEM: 0.5,
+      DOCUMENT: 0.6
+    };
+
+    return riskFactors[action.type] || 0.7;
+  }
+
+  private async getUserAutomationPreferences(userId: string): Promise<{
+    automationThreshold: number;
+    allowedActions: string[];
+  }> {
+    const userDoc = await this.db.collection('users').doc(userId).get();
+    return userDoc.data()?.automationPreferences || {
+      automationThreshold: 0.5,
+      allowedActions: ['READ', 'ANALYZE', 'SUGGEST']
+    };
+  }
+
+  private async requestUserConfirmation(userId: string, action: ModuleAction): Promise<boolean> {
+    // Implementar sistema de confirmación en tiempo real
+    // Por ahora retornamos false para acciones de alto riesgo
+    return action.metadata?.riskLevel < 0.8;
   }
 
   private async logActionStart(action: ModuleAction, userId: string): Promise<void> {

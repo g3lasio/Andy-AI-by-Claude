@@ -1,8 +1,9 @@
-
 import { Anthropic } from '@anthropic-ai/sdk';
 import { logger } from '@/shared/utils/logger';
 import { AppError } from '@/shared/utils/error-handler';
 import { retry } from '@/shared/utils/retry';
+import { getFirestore, doc, setDoc, Timestamp } from "firebase/firestore"; // Added Firebase imports
+import { firebaseApp } from '@/shared/firebase'; // Assuming firebaseApp is defined elsewhere
 
 interface IRSNotice {
   noticeId: string;
@@ -49,19 +50,48 @@ export class IRSCommunicationService {
     this.anthropic = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
+    this.initializeTaxLawUpdates();
+  }
+
+  private async initializeTaxLawUpdates() {
+    // Actualización diaria de cambios en leyes fiscales
+    setInterval(async () => {
+      try {
+        await this.fetchLatestTaxLawUpdates();
+      } catch (error) {
+        logger.error('Error fetching tax law updates:', error);
+      }
+    }, 24 * 60 * 60 * 1000); // Cada 24 horas
+  }
+
+  private async fetchLatestTaxLawUpdates() {
+    const response = await this.anthropic.messages.create({
+      model: 'claude-3-opus-20240229',
+      messages: [{
+        role: 'user',
+        content: 'Analyze and summarize the latest IRS tax law changes and updates from irs.gov'
+      }]
+    });
+
+    // Almacenar actualizaciones en Firebase
+    const db = getFirestore(firebaseApp);
+    await setDoc(doc(db, 'taxLawUpdates', new Date().toISOString()), {
+      content: response.content[0].text,
+      timestamp: Timestamp.now()
+    });
   }
 
   async generateIRSResponses(notice: IRSNotice): Promise<IRSResponse> {
     try {
       // Análisis de la notificación con IA
       const analysis = await this.analyzeNoticeWithAI(notice);
-      
+
       // Preparar documentos de respuesta
       const documents = await this.prepareResponseDocuments(notice, analysis);
-      
+
       // Generar explicación detallada
       const explanation = await this.generateDetailedExplanation(notice, analysis);
-      
+
       // Calcular plazos
       const deadlines = this.calculateDeadlines(notice);
 
@@ -81,13 +111,13 @@ export class IRSCommunicationService {
     try {
       // Recopilar documentos solicitados
       const documents = await this.gatherAuditDocuments(auditRequest);
-      
+
       // Generar explicaciones para cada documento
       const explanations = await this.generateDocumentExplanations(documents);
-      
+
       // Crear resumen ejecutivo
       const summary = await this.createAuditSummary(auditRequest, documents);
-      
+
       // Establecer línea temporal
       const timeline = this.createAuditTimeline(auditRequest);
 
@@ -165,7 +195,7 @@ export class IRSCommunicationService {
     documents: Map<string, Buffer>
   ): Promise<Map<string, string>> {
     const explanations = new Map<string, string>();
-    
+
     for (const [docId, content] of documents) {
       const response = await this.anthropic.messages.create({
         model: 'claude-3-opus-20240229',
@@ -174,7 +204,7 @@ export class IRSCommunicationService {
           content: `Generate explanation for tax document ${docId}`
         }]
       });
-      
+
       explanations.set(docId, response.content[0].text);
     }
 

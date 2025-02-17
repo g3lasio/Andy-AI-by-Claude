@@ -19,13 +19,44 @@ src/
 ├── app/                    # Next.js components and pages
 ├── core-hub/              # Application core
 │   ├── ai/               # AI services
-│   ├── chat/            # Chat system
+│   │   └── predictive/   # Shared predictive analytics
+│   ├── chat/            # Chat system and commands
 │   ├── documents/       # Document management
-│   └── memory/         # Memory system
+│   └── memory/         # Memory and context system
 ├── modules/              # Specific modules
 │   └── taxAdvisor/     # Tax advisory module
 └── shared/              # Shared utilities
 ```
+
+## Core Hub Shared Functions
+
+The Core Hub contains essential shared services used across multiple modules:
+
+### AI Services
+- Predictive Analytics Hub
+- Risk Assessment Engine
+- Financial Pattern Recognition
+- Market Trend Analysis
+
+### Document Management
+- Intelligent Document Processing
+- Form Classification & Validation
+- Secure Document Storage
+- Permission Management
+- Encryption Services
+
+### Chat System
+- Intent Analysis
+- Context Management
+- Command Processing
+- Form Finding & Filling
+- Action Execution
+
+### Memory System
+- User Context Management
+- Financial Profile Tracking
+- Historical Data Analysis
+- Smart Data Caching
 
 ## Technologies Used
 

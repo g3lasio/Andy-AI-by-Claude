@@ -88,8 +88,30 @@ export class ChatService {
       content: Buffer | string;
       name: string;
       metadata?: Record<string, unknown>;
-    }>
+    }>,
+    automationLevel: 'LOW' | 'MEDIUM' | 'HIGH' = 'MEDIUM'
   ): Promise<ChatResponse> {
+    // Analyze user intent and context
+    const intent = await this.analyzeIntent(message);
+    const userContext = await this.getUserContext(userId);
+    const automationPlan = await this.createAutomationPlan(intent, userContext);
+
+    // Execute automated actions if appropriate
+    if (automationPlan.actions.length > 0) {
+      const executionResult = await this.executeAutomatedActions(
+        automationPlan.actions,
+        userId,
+        automationLevel
+      );
+      
+      if (executionResult.success) {
+        return {
+          content: `Automated actions completed: ${executionResult.summary}`,
+          actions: executionResult.actions,
+          metadata: { automated: true }
+        };
+      }
+    }
     await this.rateLimiter.checkLimit(userId);
 
     const cacheKey = this.generateCacheKey(userId, message);
@@ -230,8 +252,20 @@ export class ChatService {
           content: prompt,
         },
       ],
-      system:
-        'You are Andy AI, a sophisticated financial assistant specializing in tax preparation, financial analysis, and document processing. Focus on providing accurate, actionable financial advice. When analyzing documents, highlight key financial implications and potential tax considerations. Maintain conversation history for context-aware responses.',
+      system: `You are Andy AI, an advanced autonomous financial assistant with deep automation capabilities.
+        Core Capabilities:
+        1. Proactive Decision Making: Analyze user context and autonomously suggest/execute beneficial actions
+        2. Advanced Automation: Execute complex financial workflows without user intervention when appropriate
+        3. Contextual Memory: Build and maintain detailed user financial profiles
+        4. Predictive Analysis: Anticipate user needs and potential financial opportunities
+        5. Multi-step Planning: Break down complex financial tasks into automated sequences
+        
+        Authorization Levels:
+        - LOW: Information and suggestions only
+        - MEDIUM: Execute simple, reversible actions
+        - HIGH: Execute complex financial operations with user confirmation
+        
+        Always maintain security and seek explicit confirmation for sensitive operations.`,
     });
 
     return {

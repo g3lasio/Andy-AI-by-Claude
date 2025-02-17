@@ -27,6 +27,36 @@ export class TaxDocumentationService {
       { formId: '1099-DIV', description: 'Dividends and Distributions', deadline: '02/15/2024' },
       { formId: '1099-INT', description: 'Interest Income', deadline: '02/15/2024' },
     ]);
+
+  private validateDocument(doc: any): boolean {
+    const validations = {
+      'W-2': (d) => {
+        return d.employerEIN && 
+               d.employeeSsn && 
+               d.wagesAmount && 
+               d.taxYear && 
+               d.employerInfo;
+      },
+      '1099-NEC': (d) => {
+        return d.payerTIN && 
+               d.recipientTIN && 
+               d.nonEmployeeCompensation && 
+               d.taxYear;
+      },
+      '1099-B': (d) => {
+        return d.brokerTIN && 
+               d.recipientTIN && 
+               d.proceeds && 
+               d.costBasis && 
+               d.taxYear;
+      }
+    };
+
+    return validations[doc.formType] ? 
+           validations[doc.formType](doc.content) : 
+           false;
+  }
+
   }
 
   async generateSupportingDocuments(taxData: any): Promise<{
@@ -178,12 +208,28 @@ export class TaxDocumentationService {
   }
 
   private hasIncomeType(taxData: any, type: string): boolean {
-    // Implementar lógica de detección de tipo de ingreso
-    return true;
+    if (!taxData?.income) return false;
+    
+    const incomeTypes = {
+      'EMPLOYMENT': (data) => data.w2Income > 0 || data.contractIncome > 0,
+      'INVESTMENTS': (data) => data.dividends > 0 || data.capitalGains > 0 || data.interest > 0,
+      'BUSINESS': (data) => data.businessIncome > 0 || data.selfEmploymentIncome > 0,
+      'RENTAL': (data) => data.rentalIncome > 0,
+      'RETIREMENT': (data) => data.pensionIncome > 0 || data.iraDistributions > 0
+    };
+
+    return incomeTypes[type] ? incomeTypes[type](taxData.income) : false;
   }
 
   private hasDocument(taxData: any, formId: string): boolean {
-    // Implementar verificación de documento
-    return false;
+    if (!taxData?.documents || !Array.isArray(taxData.documents)) {
+      return false;
+    }
+
+    return taxData.documents.some(doc => {
+      if (!doc.formId || !doc.status) return false;
+      return doc.formId === formId && doc.status === 'VERIFIED';
+    });
+  };
   }
 }

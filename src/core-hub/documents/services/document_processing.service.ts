@@ -156,3 +156,61 @@ export default class DocumentProcessingService {
     };
   }
 }
+
+
+  public async extractStructuredData(content: string): Promise<any> {
+    const response = await this.anthropic.messages.create({
+      model: 'claude-3-opus-20240229',
+      max_tokens: 4096,
+      messages: [{
+        role: 'user',
+        content: `Extrae todos los datos estructurados de este documento, incluyendo:
+        - Fechas y timestamps
+        - Cantidades monetarias
+        - Nombres y entidades
+        - Datos numéricos
+        - Referencias o IDs
+        
+        Documento:
+        ${content}`
+      }]
+    });
+    
+    return JSON.parse(response.content[0].text);
+  }
+
+  public async suggestModifications(content: string): Promise<string> {
+    const response = await this.anthropic.messages.create({
+      model: 'claude-3-opus-20240229',
+      max_tokens: 4096,
+      messages: [{
+        role: 'user',
+        content: `Analiza este documento y sugiere mejoras potenciales en:
+        - Formato y estructura
+        - Claridad del lenguaje
+        - Completitud de información
+        - Cumplimiento normativo
+        
+        Documento:
+        ${content}`
+      }]
+    });
+    
+    return response.content[0].text;
+  }
+
+  public async validateCompliance(content: string, documentType: string): Promise<boolean> {
+    const response = await this.anthropic.messages.create({
+      model: 'claude-3-opus-20240229',
+      max_tokens: 2048,
+      messages: [{
+        role: 'user',
+        content: `Verifica si este ${documentType} cumple con todos los requisitos legales y regulatorios necesarios.
+        
+        Documento:
+        ${content}`
+      }]
+    });
+    
+    return response.content[0].text.toLowerCase().includes('cumple con todos los requisitos');
+  }

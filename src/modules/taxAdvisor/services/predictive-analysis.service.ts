@@ -1,5 +1,5 @@
 
-import { Anthropic } from '@anthropic-ai/sdk';
+import { predictiveHub } from '@/core-hub/ai/services/predictive-hub.service';
 import { logger } from '@/shared/utils/logger';
 import { AppError } from '@/shared/utils/error-handler';
 
@@ -14,37 +14,33 @@ interface TaxPrediction {
 }
 
 export class PredictiveAnalysisService {
-  private anthropic: Anthropic;
-
-  constructor() {
-    this.anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
-    });
-  }
-
   async generatePredictions(userId: string): Promise<TaxPrediction> {
     try {
-      const historicalData = await this.getHistoricalData(userId);
-      const marketTrends = await this.analyzeMarketTrends();
-      return await this.createPredictiveModel(historicalData, marketTrends);
+      const forecast = await predictiveHub.generateFinancialForecast(userId, 12);
+      const risks = await predictiveHub.analyzeRisks(userId, 'TAX_PLANNING');
+      const optimization = await predictiveHub.optimizeStrategy(userId, 'TAX', [
+        'Minimize tax liability',
+        'Maximize deductions',
+        'Ensure compliance'
+      ]);
+
+      return this.combinePredictions(forecast, risks, optimization);
     } catch (error) {
-      logger.error('Error generating predictions:', error);
+      logger.error('Error generating tax predictions:', error);
       throw new AppError('PREDICTION_ERROR', 'Failed to generate tax predictions');
     }
   }
 
-  private async getHistoricalData(userId: string): Promise<any> {
-    // Implementar obtención de datos históricos
-    return {};
+  private combinePredictions(forecast: any, risks: any[], optimization: any): TaxPrediction {
+    return {
+      year: new Date().getFullYear(),
+      scenarios: this.generateScenarios(forecast, risks),
+      recommendations: optimization.recommendations
+    };
   }
 
-  private async analyzeMarketTrends(): Promise<any> {
-    // Implementar análisis de tendencias
-    return {};
-  }
-
-  private async createPredictiveModel(historicalData: any, marketTrends: any): Promise<TaxPrediction> {
-    // Implementar modelo predictivo
-    return {} as TaxPrediction;
+  private generateScenarios(forecast: any, risks: any[]): any[] {
+    // Implementar generación de escenarios basados en forecast y riesgos
+    return [];
   }
 }
