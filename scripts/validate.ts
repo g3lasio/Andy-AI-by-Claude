@@ -36,11 +36,6 @@ async function runValidations() {
       throw new Error('ESLint checks failed');
     }
 
-    // Run Jest tests
-    console.log('Running Jest tests...');
-    await execAsync('jest --coverage --detectOpenHandles');
-    await notifyResult('Jest', 'All tests passed', true);
-
     // Run Vitest tests
     console.log('Running Vitest tests...');
     await execAsync('vitest run --coverage');
